@@ -1,0 +1,27 @@
+name: 01 Hola Mundo Data Pipeline
+
+# 1. ¿Cuándo se ejecuta? Al hacer push a la rama main
+on:
+  push:
+    branches: [ main ]
+
+# 2. ¿Qué va a hacer?
+jobs:
+  mi-primer-job:
+    # Le decimos a GitHub que nos preste una máquina virtual con Ubuntu actualizado
+    runs-on: ubuntu-latest
+
+    steps:
+    # Paso A: Clonar el código de nuestro repositorio dentro de la máquina virtual
+    - name: Clonar repositorio
+      uses: actions/checkout@v4
+
+    # Paso B: Configurar la versión de Python que queremos usar
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    # Paso C: Ejecutar nuestro script de datos
+    - name: Ejecutar Script de Validación
+      run: python validate_env.py
