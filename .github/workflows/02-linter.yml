@@ -1,0 +1,30 @@
+name: 02 Control de Calidad de Código
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  linter-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    # Instalamos las herramientas ruff (linter ultra rápido) y black (formateador)
+    - name: Instalar herramientas de estilo
+      run: pip install ruff black
+
+    # Forzamos a que revise si el código cumple el formato sin modificarlo (--check)
+    - name: Validar formato con Black
+      run: black --check .
+
+    # Revisamos errores de sintaxis o variables sin usar con Ruff
+    - name: Validar linter con Ruff
+      run: ruff check .
